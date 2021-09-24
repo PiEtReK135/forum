@@ -1,3 +1,7 @@
+`<?php
+session_start();
+require_once "dbconnect.php";
+?>
 <!DOCTYPE html>
 <html lang="PL">
 
@@ -17,8 +21,22 @@
                 </div>
                 <div class="col-12 col-lg-6">
                     <ul class="list-unstyled d-flex">
-                        <li><a href="login.php">Zaloguj się</a></li>
+                        <?php
+                        
+                        if(isset($_SESSION["id"])){
+                        ?>
+                        <li class="pe-3"><a href="account.php">Moje konto</a></li>
+                        <li><a href="logout.php">Wyloguj się</a></li>
+
+                        <?php
+                        }else{
+
+                        ?>
+                        <li class="pe-3"><a href="login.php">Zaloguj się</a></li>
                         <li><a href="register.php">Zarejestruj się</a></li>
+                        <?php   
+                        }
+                        ?>
                     </ul>
                 </div>
             </div>
@@ -33,7 +51,18 @@
             <div class="col-12 col-lg-8">
                 <h2>Kategorie</h2>
                 <ol class="list-unstyled pt-3">
-                    <li class="border p-3 mb-2">
+                    <?php
+                        $stmt=$conn->prepare("select * from categories");
+                        $stmt->execute();
+                        $result=$stmt->fetchAll(PDO::FETCH_ASSOC);
+                        foreach($result as $row)  {
+                            echo '<li class="border p-3 mb-2">
+                            <h3 class="h4"><a href="category.php?id='.$row['id'].'">'.$row["name"].'</a></h3>
+                            <p class="m-0">'.$row["description"].'</p>
+                        </li>';
+                        }
+                    ?>
+                     <!-- <li class="border p-3 mb-2">
                         <h3 class="h4">Gry</h3>
                         <p class="m-0">Nadchodzące premiery</p>
                     </li>
@@ -44,7 +73,7 @@
                     <li class="border p-3 mb-2">
                         <h3 class="h4">Filmy</h3>
                         <p class="m-0">Natchodzące filmy</p>
-                    </li>
+                    </li> -->
                 </ol>
             </div>
             <div class="col-12 col-lg-4">
@@ -70,4 +99,4 @@
 
 </body>
 
-</html>
+</html>`

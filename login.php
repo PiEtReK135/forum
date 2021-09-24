@@ -1,3 +1,20 @@
+<?php
+session_start();
+
+if(isset($_POST["email"])&&isset($_POST["password"])){
+    require_once "dbconnect.php";
+    $stmt=$conn->prepare("SELECT * FROM users WHERE email=:email AND password=:password");
+    $stmt->execute(array("email"=>$_POST["email"],"password"=>$_POST["password"]));
+    $result=$stmt->fetchAll(PDO::FETCH_ASSOC);
+    if(count($result)){
+        $_SESSION["id"]=$result[0]["id"];
+        header("Location: index.php");
+        exit;
+    }else{
+        echo "Niepoprawne dane";
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="PL">
 

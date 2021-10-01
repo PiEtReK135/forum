@@ -2,6 +2,11 @@
 session_start();
 require_once "dbconnect.php";
 
+if(isset($_SESSION["id"])==false){
+    header("Location: login.php");
+    exit;
+}
+
 if(isset($_POST["topic"])&&isset($_POST["text"])){
     $stmt=$conn->prepare("INSERT INTO threads (user_id, category_id, topic) VALUES (:user_id, :category_id, :topic)");
     $stmt->execute(["user_id"=>$_SESSION["id"],"category_id"=>$_GET["id"],"topic"=>$_POST["topic"]]);

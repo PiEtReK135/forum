@@ -1,4 +1,4 @@
-`<?php
+<?php
 session_start();
 require_once "dbconnect.php";
 ?>
@@ -77,8 +77,11 @@ require_once "dbconnect.php";
                 </ol>
             </div>
             <div class="col-12 col-lg-4">
+                <!-- zrób żeby tu wyświetlały się ostatnio dodane tematy i posty (tabele threads i posts). Do kwerendy wykorzystaj "ORDER BY id DESC LIMIT 3" -->
+
                 <h2>Ostatnio dodane</h2>
                 <h3>Tematy</h3>
+                <!-- w pętli wypisz (foreach i echo) -->
                 <ol class="list-unstyled pt-3">
                     <li class="border p-3 mb-2">
                         <h3 class="h4">Dying Light</h3>
@@ -99,4 +102,4 @@ require_once "dbconnect.php";
 
 </body>
 
-</html>`
+</html>

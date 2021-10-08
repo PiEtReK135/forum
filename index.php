@@ -78,21 +78,38 @@ require_once "dbconnect.php";
             </div>
             <div class="col-12 col-lg-4">
                 <!-- zrób żeby tu wyświetlały się ostatnio dodane tematy i posty (tabele threads i posts). Do kwerendy wykorzystaj "ORDER BY id DESC LIMIT 3" -->
-
                 <h2>Ostatnio dodane</h2>
                 <h3>Tematy</h3>
                 <!-- w pętli wypisz (foreach i echo) -->
                 <ol class="list-unstyled pt-3">
-                    <li class="border p-3 mb-2">
-                        <h3 class="h4">Dying Light</h3>
-                    </li>
+                    <?php
+                    $stmt=$conn->prepare("SELECT id,topic FROM threads ORDER BY id DESC LIMIT 3");
+                    $stmt->execute();
+                    $result=$stmt->fetchAll(PDO::FETCH_ASSOC);
+
+                    foreach($result as $row){
+                        echo '<li class="border p-3 mb-2">
+                        <h3 class="h4"><a href="thread.php?id='.$row['id'].'">'.$row['topic'].'</a></h3>
+                    </li>';
+                    }
+                    ?>
+                    
                 </ol>
                 <h3>Posty</h3>
                 <ol class="list-unstyled pt-3">
-                    <li class="border p-3 mb-2">
-                        <h3 class="h4">Dying Light</h3>
-                        <p class="m-0">Data premiery i informacje</p>
-                    </li>
+                    <?php
+                    $stmt=$conn->prepare("SELECT posts.id AS p_id, text, thread_id, login FROM posts INNER JOIN users ON posts.user_id=users.id ORDER BY posts.id DESC LIMIT 3");
+                    $stmt->execute();
+                    $result=$stmt->fetchAll(PDO::FETCH_ASSOC);
+
+                    foreach($result as $row){
+                        echo '<li class="border p-3 mb-2">
+                        <h3 class="h4"><a href="thread.php?id='.$row['thread_id'].'#'.$row['p_id'].'">'.$row["text"].'</a></h3>
+                        <p class="m-0">'.$row["login"].'</p>
+                    </li>';
+                    }
+                    ?>
+                    
                 </ol>
             </div>
         </div>

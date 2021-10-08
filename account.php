@@ -56,7 +56,7 @@ if(isset($_POST["new-password"])&&isset($_POST["new-password-confirm"])){
                 <h1>Moje konto</h1>
                 <h2 class="h4">Zmień hasło</h2>
 
-                <!-- formularz dwa inputy do zmiany hasła -->
+            
                 <form method="POST" class="pt-3">
                     <label for="new-password">Nowe Hasło</label>
                     <input type="password" id="new-password" name="new-password">

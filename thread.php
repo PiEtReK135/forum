@@ -63,11 +63,11 @@ if(isset($_POST["text"]) && isset($_SESSION['id'])){
             <h2><?= $result['topic'] ?></h2>
             <ol class="list-unstyled pt-3">
                 <?php
-                $stmt = $conn->prepare("SELECT * FROM posts INNER JOIN users ON posts.user_id=users.id WHERE thread_id=:id");
+                $stmt = $conn->prepare("SELECT *,posts.id AS p_id FROM posts INNER JOIN users ON posts.user_id=users.id WHERE thread_id=:id");
                 $stmt->execute(["id" => $_GET["id"]]);
                 $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 foreach ($result as $row) {
-                    echo '<li class="p-3 border mb-3"><div class="text-success fw-bold">'.$row['login'].'</div><div>'.$row['text'].'</div><div>'.$row['datetime'].'</div></li>';
+                    echo '<li class="p-3 border mb-3" id="'.$row['p_id'].'"><div class="text-success fw-bold">'.$row['login'].'</div><div>'.$row['text'].'</div><div>'.$row['datetime'].'</div></li>';
                 }
                 ?>
             </ol>
